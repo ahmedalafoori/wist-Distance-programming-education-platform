@@ -7,6 +7,7 @@ use App\Models\Course;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Components\FileUpload;
 
 class CourseResource extends Resource
 {
@@ -30,7 +31,13 @@ class CourseResource extends Resource
                 Forms\Components\TextInput::make('duration')
                     ->required()
                     ->numeric()
-                    ->minValue(1),
+                    ->minValue(1)
+                    ->suffix('hours'),
+                FileUpload::make('image_url')
+                    ->image()
+                    ->maxSize(1024)
+                    ->directory('course-images')
+                    ->visibility('public'),
             ]);
     }
 
@@ -38,11 +45,21 @@ class CourseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('instructor'),
-                Tables\Columns\TextColumn::make('duration'),
+                Tables\Columns\ImageColumn::make('image_url')
+                    ->width(100)
+                    ->height(100),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('instructor')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('duration')
+                    ->suffix(' hours')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //
