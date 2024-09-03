@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2024 at 11:14 AM
+-- Generation Time: Sep 03, 2024 at 06:40 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,11 +31,22 @@ CREATE TABLE `courses` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
   `instructor` varchar(255) NOT NULL,
   `duration` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `title`, `description`, `image_url`, `instructor`, `duration`, `created_at`, `updated_at`) VALUES
+(2, 'مقدمة في البرمجة بلغة Python', 'تعلم أساسيات البرمجة باستخدام لغة Python الشهيرة', 'https://www.python.org/static/community_logos/python-logo-master-v3-TM.png', 'أحمد محمد', 20, '2024-09-03 16:08:52', '2024-09-03 16:08:52'),
+(3, 'تطوير تطبيقات الويب باستخدام Laravel', 'اكتشف قوة إطار العمل Laravel لبناء تطبيقات ويب متطورة', 'https://laravel.com/img/logomark.min.svg', 'سارة أحمد', 30, '2024-09-03 16:08:52', '2024-09-03 16:08:52'),
+(4, 'تطوير تطبيقات الهواتف الذكية باستخدام React Native', 'ابدأ رحلتك في عالم تطوير تطبيقات الهواتف الذكية عبر المنصات', 'https://reactnative.dev/img/header_logo.svg', 'ليلى خالد', 25, '2024-09-03 16:08:52', '2024-09-03 16:08:52'),
+(5, 'أساسيات JavaScript للمبتدئين', 'تعلم أساسيات لغة JavaScript وكيفية استخدامها في تطوير الويب', 'https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png', 'عمر حسن', 18, '2024-09-03 16:08:52', '2024-09-03 16:08:52');
 
 -- --------------------------------------------------------
 
@@ -75,7 +86,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2024_09_03_083324_create_permission_tables', 2),
-(6, '2024_09_03_084040_create_courses_table', 3);
+(6, '2024_09_03_084040_create_courses_table', 3),
+(7, '2024_09_03_160303_add_image_to_courses_table', 4),
+(8, '2014_10_12_100000_create_password_resets_table', 5);
 
 -- --------------------------------------------------------
 
@@ -99,6 +112,18 @@ CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
   `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -233,6 +258,12 @@ ALTER TABLE `model_has_roles`
   ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
@@ -282,7 +313,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -294,7 +325,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `permissions`
